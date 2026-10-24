@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
     replayIntro,
     activeTab,
   } = useGraveyard();
-  const { isAuthenticated, logout, navigateToAdmin } = useAuth();
+  const { isAuthenticated, logout, navigateToAdmin, navigateToLogin } = useAuth();
 
   const handleNextTheme = () => {
     if (settings.theme === 'dark') setTheme('light');
@@ -124,13 +124,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
           <span>Bury a project</span>
         </button>
 
-        {/* Admin / Logout — only shown when authenticated */}
-        {isAuthenticated && (
+        {/* Auth controls — login link or admin+logout depending on session */}
+        {isAuthenticated ? (
           <>
             <button
               onClick={navigateToAdmin}
               className="navbar-icon-btn"
-              title="Back to Admin Dashboard"
+              title="Admin Dashboard"
               aria-label="Admin Dashboard"
             >
               <LayoutDashboard size={16} />
@@ -146,6 +146,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
               <span className="btn-label-desktop">Logout</span>
             </button>
           </>
+        ) : (
+          <button
+            onClick={navigateToLogin}
+            className="navbar-icon-btn navbar-admin-login-btn"
+            title="Admin Login"
+            aria-label="Admin Login"
+          >
+            <LayoutDashboard size={16} />
+            <span className="btn-label-desktop">Admin</span>
+          </button>
         )}
       </div>
     </header>

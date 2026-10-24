@@ -2,30 +2,29 @@
  * ⚠️  DEMO AUTHENTICATION — NOT PRODUCTION READY ⚠️
  *
  * This module provides FRONTEND-ONLY prototype authentication.
- * It uses hardcoded credentials compared in-memory.
- * It does NOT provide real security — anyone who reads the source code
- * can log in. Route protection here only hides UI; it does not protect data.
+ * Credentials are hardcoded and compared in-memory.
+ * Anyone who reads the source code can log in.
+ * Route protection here only hides UI — it does NOT protect data.
  *
- * HOW TO REPLACE WITH REAL AUTH (Supabase example):
- * --------------------------------------------------
- *  1. npm install @supabase/supabase-js
- *  2. Create a Supabase project → enable Email/Password auth.
- *  3. Add to your .env file (NEVER commit this):
- *       VITE_SUPABASE_URL=https://xxx.supabase.co
- *       VITE_SUPABASE_ANON_KEY=eyJhb...          (anon key only — public is fine)
- *  4. Replace login() below with:
- *       const { error } = await supabase.auth.signInWithPassword({ email, password })
- *  5. Replace logout() with:
- *       await supabase.auth.signOut()
- *  6. Use Supabase Row Level Security (RLS) for actual data protection.
- *  7. NEVER put the service-role (secret) key in any frontend file.
+ * ── HOW TO REPLACE WITH REAL AUTH (Supabase) ──────────────────────────────
+ *  1.  npm install @supabase/supabase-js
+ *  2.  Create a Supabase project → Authentication → enable Email/Password.
+ *  3.  Create .env (never commit it):
+ *        VITE_SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
+ *        VITE_SUPABASE_ANON_KEY=eyJhbGci...    ← anon/public key only
+ *  4.  Replace login() with:
+ *        const { error } = await supabase.auth.signInWithPassword({ email, password })
+ *  5.  Replace logout() with:
+ *        await supabase.auth.signOut()
+ *  6.  Protect data with Supabase Row Level Security (RLS) policies.
+ *  7.  NEVER put the service-role (secret) key in any frontend file.
+ * ──────────────────────────────────────────────────────────────────────────
  */
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 // ─── Demo credentials ────────────────────────────────────────────────────────
-// These are intentionally visible — this is a demo prototype.
-// Replace this entire block when wiring up real auth.
+// Intentionally visible — this is a prototype. Replace when using real auth.
 export const DEMO_CREDENTIALS = {
   email: 'admin@graveyard.dev',
   username: 'admin',
@@ -37,7 +36,7 @@ export const DEMO_CREDENTIALS = {
 
 const SESSION_KEY = 'graveyard_admin_session_v1';
 
-export type AppView = 'login' | 'admin' | 'app';
+export type AppView = 'app' | 'login' | 'admin';
 
 export interface AdminSession {
   email: string;
@@ -53,6 +52,7 @@ interface AuthContextType {
   currentView: AppView;
   login: (identifier: string, password: string, remember: boolean) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
+  navigateToLogin: () => void;
   navigateToApp: () => void;
   navigateToAdmin: () => void;
 }
@@ -80,19 +80,15 @@ function clearSession() {
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [session, setSession] = useState<AdminSession | null>(() => loadSession());
-  const [currentView, setCurrentView] = useState<AppView>(() => {
-    const s = loadSession();
-    return s ? 'admin' : 'login';
-  });
+  const initialSession = loadSession();
+
+  const [session, setSession] = useState<AdminSession | null>(initialSession);
+  // Default: main app is public. Only show admin/login when explicitly navigated.
+  const [currentView, setCurrentView] = useState<AppView>(
+    initialSession ? 'admin' : 'app',
+  );
 
   const isAuthenticated = session !== null;
-
-  useEffect(() => {
-    if (!isAuthenticated && currentView !== 'login') {
-      setCurrentView('login');
-    }
-  }, [isAuthenticated, currentView]);
 
   const login = useCallback(async (
     identifier: string,
@@ -127,15 +123,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = useCallback(() => {
     clearSession();
     setSession(null);
+    setCurrentView('app'); // Return to main public app, not forced login
+  }, []);
+
+  const navigateToLogin = useCallback(() => {
     setCurrentView('login');
   }, []);
 
   const navigateToApp = useCallback(() => {
-    if (isAuthenticated) setCurrentView('app');
-  }, [isAuthenticated]);
+    setCurrentView('app');
+  }, []);
 
   const navigateToAdmin = useCallback(() => {
     if (isAuthenticated) setCurrentView('admin');
+    else setCurrentView('login');
   }, [isAuthenticated]);
 
   return (
@@ -145,6 +146,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       currentView,
       login,
       logout,
+      navigateToLogin,
       navigateToApp,
       navigateToAdmin,
     }}>
@@ -153,6 +155,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth(): AuthContextType {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>');
