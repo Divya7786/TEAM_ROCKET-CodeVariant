@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGraveyard } from '../context/GraveyardContext';
+import { useAuth } from '../auth/authContext';
 import {
   Search,
   Plus,
@@ -8,6 +9,8 @@ import {
   Palette,
   Menu,
   RotateCcw,
+  LogOut,
+  LayoutDashboard,
 } from 'lucide-react';
 import './Navbar.css';
 
@@ -25,6 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
     replayIntro,
     activeTab,
   } = useGraveyard();
+  const { isAuthenticated, logout, navigateToAdmin } = useAuth();
 
   const handleNextTheme = () => {
     if (settings.theme === 'dark') setTheme('light');
@@ -119,6 +123,30 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
           <Plus size={16} strokeWidth={2.5} />
           <span>Bury a project</span>
         </button>
+
+        {/* Admin / Logout — only shown when authenticated */}
+        {isAuthenticated && (
+          <>
+            <button
+              onClick={navigateToAdmin}
+              className="navbar-icon-btn"
+              title="Back to Admin Dashboard"
+              aria-label="Admin Dashboard"
+            >
+              <LayoutDashboard size={16} />
+              <span className="btn-label-desktop">Admin</span>
+            </button>
+            <button
+              onClick={logout}
+              className="navbar-icon-btn"
+              title="Logout"
+              aria-label="Logout"
+            >
+              <LogOut size={16} />
+              <span className="btn-label-desktop">Logout</span>
+            </button>
+          </>
+        )}
       </div>
     </header>
   );
