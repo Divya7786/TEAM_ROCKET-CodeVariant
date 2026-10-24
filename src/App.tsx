@@ -9,7 +9,6 @@ import { BuryModal } from './components/BuryModal';
 import { ProjectDetailsModal } from './components/ProjectDetailsModal';
 import { Toast } from './components/Toast';
 import { LoginPage } from './pages/LoginPage';
-import { AdminDashboard } from './pages/AdminDashboard';
 
 // Pages
 import { Dashboard } from './pages/Dashboard';
@@ -64,7 +63,6 @@ const AppRouter: React.FC = () => {
   const { currentView } = useAuth();
 
   if (currentView === 'login') return <LoginPage />;
-  if (currentView === 'admin') return <AdminDashboard />;
   return <GraveyardApp />;
 };
 

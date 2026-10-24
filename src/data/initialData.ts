@@ -218,6 +218,38 @@ const rawProjects: Omit<Project, 'revivalScore' | 'revivalScores'>[] = [
       { title: 'Telemetry export to Prometheus', completed: false, dueDate: 'Nov 20' },
     ],
   },
+  {
+    id: 'proj-type-canvas',
+    name: 'TypeCanvas',
+    tagline: 'Collaborative infinite canvas for developers with code blocks',
+    description: 'Real-time multiplayer infinite canvas with first-class code block support, syntax highlighting, and exportable SVG diagrams.',
+    category: 'Dev Tools',
+    technologies: ['React', 'TypeScript', 'Y.js', 'WebSockets', 'Vite'],
+    status: 'risen',
+    repoUrl: 'https://github.com/alexdev/type-canvas',
+    liveUrl: 'https://typecanvas.dev',
+    completedTasks: [
+      { id: 'tc-1', text: 'Infinite pan-and-zoom canvas with hardware acceleration', completed: true },
+      { id: 'tc-2', text: 'Y.js CRDT real-time collaborative cursors', completed: true },
+      { id: 'tc-3', text: 'Code block nodes with Monaco syntax highlighting', completed: true },
+    ],
+    remainingTasks: [
+      { id: 'tc-4', text: 'Export full canvas to SVG and PNG', completed: false },
+      { id: 'tc-5', text: 'GitHub-flavored Markdown nodes', completed: false },
+    ],
+    abandonmentReason: 'Solo burnout',
+    notes: 'Revived 10 days ago with fresh energy. Y.js multiplayer is buttery smooth. Targeting a Product Hunt launch next month.',
+    dateBuried: '2026-05-30T12:00:00.000Z',
+    dateRevived: '2026-10-14T09:00:00.000Z',
+    lastUpdated: '2026-10-24T07:00:00.000Z',
+    isSample: true,
+    milestones: [
+      { title: 'Core canvas engine stable', completed: true, dueDate: 'Oct 16' },
+      { title: 'Real-time multiplayer working end-to-end', completed: true, dueDate: 'Oct 20' },
+      { title: 'SVG export feature', completed: false, dueDate: 'Nov 02' },
+      { title: 'Product Hunt launch day', completed: false, dueDate: 'Nov 18' },
+    ],
+  },
 ];
 
 export const initialProjects: Project[] = rawProjects.map((p) => {
@@ -436,6 +468,109 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     dateAdded: '2026-09-12',
     isSample: true,
   },
+  {
+    id: 'snip-use-intersection',
+    title: 'useIntersectionObserver — Lazy Load Hook',
+    description: 'Performant React hook to detect when an element enters the viewport for lazy loading images, infinite scroll triggers, or reveal animations.',
+    category: 'hook',
+    language: 'typescript',
+    code: `import { useEffect, useRef, useState } from 'react';
+
+export function useIntersectionObserver(
+  options: IntersectionObserverInit = {}
+) {
+  const ref = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, { threshold: 0.1, ...options });
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+}`,
+    projectId: 'proj-type-canvas',
+    projectName: 'TypeCanvas',
+    tags: ['react', 'hooks', 'performance', 'intersection-observer'],
+    dateAdded: '2026-10-05',
+    isSample: true,
+  },
+  {
+    id: 'snip-css-tokens',
+    title: 'Design Token System — CSS Custom Properties',
+    description: 'Production-grade CSS custom property design token setup covering color scales, spacing, radii, shadows, and automatic dark/light theme switching.',
+    category: 'config',
+    language: 'css',
+    code: `:root {
+  /* Color scale */
+  --color-brand: #80DC48;
+  --color-brand-dim: rgba(128, 220, 72, 0.15);
+  --color-surface: #0f101a;
+  --color-surface-elevated: #161727;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Typography */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 20px rgba(128, 220, 72, 0.2);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-surface: #f8f9fa;
+    --color-surface-elevated: #ffffff;
+  }
+}`,
+    projectId: 'proj-look-dev',
+    projectName: 'Look Dev',
+    tags: ['css', 'design-tokens', 'theming', 'variables'],
+    dateAdded: '2026-09-28',
+    isSample: true,
+  },
+  {
+    id: 'snip-format-bytes',
+    title: 'formatBytes — Human-Readable File Size',
+    description: 'Tiny zero-dependency utility to display raw byte counts as KB, MB, GB with configurable decimal places.',
+    category: 'utility',
+    language: 'typescript',
+    code: `export function formatBytes(bytes: number, decimals = 1): string {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const dm = Math.max(0, decimals);
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return \`\${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} \${sizes[i]}\`;
+}
+
+// Usage:
+// formatBytes(1536)       → "1.5 KB"
+// formatBytes(1048576)    → "1.0 MB"
+// formatBytes(0)          → "0 B"`,
+    projectId: 'proj-cache-flow',
+    projectName: 'CacheFlow',
+    tags: ['utility', 'formatting', 'files'],
+    dateAdded: '2026-10-18',
+    isSample: true,
+  },
 ];
 
 export const initialActivities: ActivityItem[] = [
@@ -492,6 +627,42 @@ export const initialActivities: ActivityItem[] = [
     timestamp: '6 days ago',
     projectId: 'proj-devdesk',
     projectName: 'DevDesk',
+  },
+  {
+    id: 'act-7',
+    type: 'revived',
+    title: 'TypeCanvas resurrected from the crypt',
+    description: 'Y.js multiplayer rewrite greenlit. Milestone 1 completed on day one.',
+    timestamp: '10 days ago',
+    projectId: 'proj-type-canvas',
+    projectName: 'TypeCanvas',
+  },
+  {
+    id: 'act-8',
+    type: 'harvested',
+    title: 'Extracted useIntersectionObserver hook',
+    description: 'Lazy-load viewport hook saved from TypeCanvas infinite canvas prototype.',
+    timestamp: '12 days ago',
+    projectId: 'proj-type-canvas',
+    projectName: 'TypeCanvas',
+  },
+  {
+    id: 'act-9',
+    type: 'buried',
+    title: 'Buried Look Dev browser extension',
+    description: 'Recorded reason "Time constraints". 80% complete — Manifest v3 packaging pending.',
+    timestamp: '14 days ago',
+    projectId: 'proj-look-dev',
+    projectName: 'Look Dev',
+  },
+  {
+    id: 'act-10',
+    type: 'archived',
+    title: 'Archived Snippet Vault to cold storage',
+    description: 'Desktop app is stable — moved to archive pending CLI cross-platform work.',
+    timestamp: '18 days ago',
+    projectId: 'proj-snippet-vault',
+    projectName: 'Snippet Vault',
   },
 ];
 

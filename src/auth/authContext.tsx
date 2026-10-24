@@ -36,7 +36,7 @@ export const DEMO_CREDENTIALS = {
 
 const SESSION_KEY = 'graveyard_admin_session_v1';
 
-export type AppView = 'app' | 'login' | 'admin';
+export type AppView = 'app' | 'login';
 
 export interface AdminSession {
   email: string;
@@ -54,7 +54,6 @@ interface AuthContextType {
   logout: () => void;
   navigateToLogin: () => void;
   navigateToApp: () => void;
-  navigateToAdmin: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -85,7 +84,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<AdminSession | null>(initialSession);
   // Default: main app is public. Only show admin/login when explicitly navigated.
   const [currentView, setCurrentView] = useState<AppView>(
-    initialSession ? 'admin' : 'login',
+    initialSession ? 'app' : 'login',
   );
 
   const isAuthenticated = session !== null;
@@ -116,7 +115,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     saveSession(newSession, remember);
     setSession(newSession);
-    setCurrentView('admin');
+    setCurrentView('app');
     return { success: true };
   }, []);
 
@@ -134,11 +133,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCurrentView('app');
   }, []);
 
-  const navigateToAdmin = useCallback(() => {
-    if (isAuthenticated) setCurrentView('admin');
-    else setCurrentView('login');
-  }, [isAuthenticated]);
-
   return (
     <AuthContext.Provider value={{
       isAuthenticated,
@@ -148,7 +142,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       logout,
       navigateToLogin,
       navigateToApp,
-      navigateToAdmin,
     }}>
       {children}
     </AuthContext.Provider>

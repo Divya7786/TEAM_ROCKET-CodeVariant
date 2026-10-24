@@ -10,7 +10,7 @@ import {
   Menu,
   RotateCcw,
   LogOut,
-  LayoutDashboard,
+  Shield,
 } from 'lucide-react';
 import './Navbar.css';
 
@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
     replayIntro,
     activeTab,
   } = useGraveyard();
-  const { isAuthenticated, logout, navigateToAdmin, navigateToLogin } = useAuth();
+  const { isAuthenticated, session, logout } = useAuth();
 
   const handleNextTheme = () => {
     if (settings.theme === 'dark') setTheme('light');
@@ -124,18 +124,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
           <span>Bury a project</span>
         </button>
 
-        {/* Auth controls — login link or admin+logout depending on session */}
-        {isAuthenticated ? (
+        {/* Auth controls */}
+        {isAuthenticated && (
           <>
-            <button
-              onClick={navigateToAdmin}
-              className="navbar-icon-btn"
-              title="Admin Dashboard"
-              aria-label="Admin Dashboard"
-            >
-              <LayoutDashboard size={16} />
-              <span className="btn-label-desktop">Admin</span>
-            </button>
+            {session?.role && (
+              <span className="navbar-role-badge" title={`Signed in as ${session.displayName}`}>
+                <Shield size={11} />
+                {session.role}
+              </span>
+            )}
             <button
               onClick={logout}
               className="navbar-icon-btn"
@@ -146,16 +143,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
               <span className="btn-label-desktop">Logout</span>
             </button>
           </>
-        ) : (
-          <button
-            onClick={navigateToLogin}
-            className="navbar-icon-btn navbar-admin-login-btn"
-            title="Admin Login"
-            aria-label="Admin Login"
-          >
-            <LayoutDashboard size={16} />
-            <span className="btn-label-desktop">Admin</span>
-          </button>
         )}
       </div>
     </header>

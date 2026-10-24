@@ -81,9 +81,25 @@ const STORAGE_KEYS = {
   SNIPPETS: 'project_graveyard_snippets_v1',
   ACTIVITIES: 'project_graveyard_activities_v1',
   SETTINGS: 'project_graveyard_settings_v1',
+  SEEDED: 'project_graveyard_seeded_v1',
 };
 
+// Write seed data once on first ever load; never overwrites existing user data after that.
+function ensureSeeded() {
+  if (localStorage.getItem(STORAGE_KEYS.SEEDED)) return;
+  localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(initialProjects));
+  localStorage.setItem(STORAGE_KEYS.SNIPPETS, JSON.stringify(initialSnippets));
+  localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(initialActivities));
+  if (!localStorage.getItem(STORAGE_KEYS.SETTINGS)) {
+    localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(defaultSettings));
+  }
+  localStorage.setItem(STORAGE_KEYS.SEEDED, '1');
+}
+
 export const GraveyardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Seed localStorage on first-ever run so counters are never all-zero
+  ensureSeeded();
+
   // 1. Projects
   const [projects, setProjects] = useState<Project[]>(() => {
     try {
@@ -494,7 +510,7 @@ export const GraveyardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     showToast('Snippet deleted', 'info');
   };
 
-  // Reset to sample data
+  // Reset to sample data ("Reset demo data" button in Settings)
   const resetToSampleData = () => {
     setProjects(initialProjects);
     setSnippets(initialSnippets);
@@ -504,6 +520,7 @@ export const GraveyardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     localStorage.setItem(STORAGE_KEYS.SNIPPETS, JSON.stringify(initialSnippets));
     localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(initialActivities));
     localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(defaultSettings));
+    localStorage.setItem(STORAGE_KEYS.SEEDED, '1');
     showToast('Reset to default cemetery sample data', 'info');
   };
 
