@@ -1,0 +1,320 @@
+/* Risen Projects Page */
+.risen-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.risen-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.risen-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--accent-green);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.risen-empty {
+  padding: 60px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.risen-empty h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.risen-empty p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  max-width: 440px;
+}
+
+/* Risen Stack */
+.risen-cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.risen-card {
+  padding: 24px;
+}
+
+.risen-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.risen-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.risen-sparkle-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px var(--accent-green-glow);
+  flex-shrink: 0;
+}
+
+.risen-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.risen-project-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.risen-tagline {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.risen-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Progress Section */
+.risen-progress-container {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.risen-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.risen-progress-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.risen-progress-number {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+/* Milestones */
+.milestones-section {
+  margin-bottom: 20px;
+}
+
+.milestones-heading {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.milestone-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.milestone-box:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-color);
+}
+
+.milestone-box.completed {
+  background: var(--badge-bg);
+  border-color: var(--badge-border);
+}
+
+.ms-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ms-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.milestone-box.completed .ms-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.ms-due {
+  font-size: 0.72rem;
+  color: var(--accent-green);
+  margin-top: 2px;
+}
+
+.risen-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.78rem;
+}
+
+.risen-resurrected-date {
+  color: var(--text-muted);
+}
+
+/* ── DnD styles ─────────────────────────────────────────────── */
+.risen-dnd-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 8px 14px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.risen-card {
+  cursor: grab;
+  transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.risen-card:active { cursor: grabbing; }
+
+.risen-card.risen-card-dragging {
+  opacity: 0.4;
+  transform: scale(0.98);
+}
+
+.risen-drag-grip {
+  cursor: grab;
+  padding: 4px 2px;
+  flex-shrink: 0;
+}
+
+.risen-drag-hint-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+
+/* RETURN TO CRYPT drop zone */
+.risen-crypt-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 90px;
+  border: 2px dashed rgba(148, 163, 184, 0.25);
+  border-radius: var(--radius-lg);
+  background: rgba(148, 163, 184, 0.03);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  cursor: default;
+  padding: 20px;
+}
+
+.crypt-zone-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.crypt-zone-desc {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.crypt-zone-archive-icon {
+  opacity: 0.4;
+}
+
+.risen-crypt-zone.crypt-zone-active {
+  border-style: solid;
+  border-color: var(--accent-amber);
+  background: rgba(245, 158, 11, 0.07);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
+  color: var(--accent-amber);
+}
+
+.risen-crypt-zone.crypt-zone-active .crypt-zone-label,
+.risen-crypt-zone.crypt-zone-active .crypt-zone-desc {
+  color: var(--accent-amber);
+  opacity: 1;
+}
+
+.risen-crypt-zone.crypt-zone-invalid {
+  border-style: solid;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.06);
+  animation: zone-shake 0.28s ease;
+}
+
+@keyframes zone-shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-5px); }
+  75%       { transform: translateX(5px); }
+}

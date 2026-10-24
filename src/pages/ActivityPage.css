@@ -1,0 +1,250 @@
+/* Activity Page Styles */
+.activity-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.activity-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Weekly Chart Card */
+.activity-chart-card {
+  padding: 24px;
+}
+
+.chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chart-subtitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.chart-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+.chart-bars-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 140px;
+  padding: 0 10px;
+  gap: 12px;
+}
+
+.chart-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bar-track {
+  flex: 1;
+  width: 100%;
+  max-width: 42px;
+  display: flex;
+  align-items: flex-end;
+  background: var(--bg-input);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  width: 100%;
+  background: var(--bg-surface-elevated);
+  border-radius: var(--radius-sm);
+  transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 4px;
+}
+
+.bar-peak {
+  background: linear-gradient(180deg, #95ea5f 0%, var(--accent-green) 100%);
+  box-shadow: 0 0 14px var(--accent-green-glow);
+}
+
+.bar-day-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.active-day {
+  color: var(--accent-green);
+  font-weight: 800;
+}
+
+/* Filter Bar */
+.activity-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.filter-pill-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.filter-pill-btn:hover {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.filter-pill-btn.active {
+  background: var(--badge-bg);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+/* Activity Feed */
+.activity-list-container {
+  overflow: hidden;
+}
+
+.activity-list-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.act-header-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.activity-feed {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.act-feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.act-feed-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.act-icon-wrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+}
+
+.icon-type-revived {
+  background: var(--badge-bg);
+  border-color: var(--badge-border);
+}
+
+.act-feed-content {
+  flex: 1;
+}
+
+.act-feed-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.act-feed-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.act-feed-time {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.act-feed-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 3px 0 6px 0;
+}
+
+.act-proj-link {
+  background: transparent;
+  border: none;
+  color: var(--accent-green);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.act-proj-link:hover {
+  text-decoration: underline;
+}
+
+.empty-activity {
+  padding: 30px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}

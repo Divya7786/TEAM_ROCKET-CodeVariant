@@ -1,0 +1,498 @@
+/* ── GraveyardCanvas ─────────────────────────────────────────────────────── */
+.graveyard-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Instructions banner */
+.canvas-instructions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.canvas-tip-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ── Staging Area ─────────────────────────────────────────────────────────── */
+.canvas-staging {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.staging-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.staging-count {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.canvas-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 80px;
+  padding: 4px 0;
+}
+
+.canvas-empty-note {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  align-self: center;
+}
+
+/* ── Individual draggable project card ────────────────────────────────────── */
+.canvas-project-card {
+  width: 200px;
+  padding: 14px 14px 12px;
+  cursor: grab;
+  user-select: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.canvas-project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  border-color: var(--border-color-hover);
+}
+
+.canvas-project-card:active {
+  cursor: grabbing;
+}
+
+.canvas-project-card.card-dragging {
+  opacity: 0.35;
+  cursor: grabbing;
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+/* Status-tinted borders */
+.canvas-project-card.card-status-risen {
+  border-color: rgba(128, 220, 72, 0.35);
+  box-shadow: 0 0 10px var(--accent-green-glow);
+}
+
+.canvas-project-card.card-status-archived {
+  opacity: 0.72;
+}
+
+.canvas-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Status dot */
+.canvas-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-buried   { background: var(--accent-amber); }
+.dot-risen    { background: var(--accent-green);  box-shadow: 0 0 5px var(--accent-green-glow); }
+.dot-archived { background: var(--text-muted); }
+
+.canvas-card-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.canvas-card-tagline {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.canvas-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.canvas-revival-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  background: var(--badge-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.canvas-status-chip {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.chip-buried   { color: var(--accent-amber);  background: rgba(245, 158, 11, 0.12); }
+.chip-risen    { color: var(--accent-green);  background: rgba(128, 220, 72, 0.12); }
+.chip-archived { color: var(--text-muted);    background: rgba(107, 114, 128, 0.12); }
+
+/* Drag-handle hint */
+.drag-handle {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.canvas-project-card:hover .drag-handle {
+  opacity: 0.7;
+}
+
+/* ── Zone sections ────────────────────────────────────────────────────────── */
+.canvas-zones-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.canvas-zones-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.canvas-main-zones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.canvas-draft-zones {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .canvas-main-zones {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .canvas-main-zones {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .canvas-draft-zones {
+    grid-template-columns: 1fr;
+  }
+
+  .canvas-project-card {
+    width: 160px;
+  }
+}
+
+/* ── Drop Zone base ───────────────────────────────────────────────────────── */
+.canvas-drop-zone {
+  min-height: 140px;
+  border: 2px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 14px;
+  text-align: center;
+  gap: 7px;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+  position: relative;
+  cursor: default;
+}
+
+.canvas-draft-zone {
+  min-height: 96px;
+}
+
+.zone-icon {
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zone-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.zone-desc {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+  max-width: 160px;
+}
+
+/* Zone-specific palette */
+.zone-resurrect { border-color: rgba(128, 220, 72, 0.22); background: rgba(128, 220, 72, 0.03); }
+.zone-resurrect .zone-icon,
+.zone-resurrect .zone-label { color: var(--accent-green); }
+
+.zone-repurpose { border-color: rgba(168, 85, 247, 0.28); background: rgba(168, 85, 247, 0.03); }
+.zone-repurpose .zone-icon,
+.zone-repurpose .zone-label { color: var(--accent-purple); }
+
+.zone-archive { border-color: rgba(56, 189, 248, 0.22); background: rgba(56, 189, 248, 0.03); }
+.zone-archive .zone-icon,
+.zone-archive .zone-label { color: var(--accent-blue); }
+
+.zone-burn { border-color: rgba(239, 68, 68, 0.22); background: rgba(239, 68, 68, 0.03); }
+.zone-burn .zone-icon,
+.zone-burn .zone-label { color: var(--accent-red); }
+
+.zone-bury {
+  border-color: rgba(245, 158, 11, 0.22);
+  background: rgba(245, 158, 11, 0.03);
+  cursor: pointer;
+}
+.zone-bury .zone-icon,
+.zone-bury .zone-label { color: var(--accent-amber); }
+.zone-bury:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.07);
+}
+.zone-bury:focus {
+  outline: 2px solid var(--accent-amber);
+  outline-offset: 2px;
+}
+
+.zone-save { border-color: rgba(56, 189, 248, 0.22); background: rgba(56, 189, 248, 0.03); }
+.zone-save .zone-icon,
+.zone-save .zone-label { color: var(--accent-blue); }
+
+/* ── Zone interaction states ─────────────────────────────────────────────── */
+
+/* Active (valid hover) */
+.canvas-drop-zone.zone-active {
+  border-style: solid;
+  transform: scale(1.02);
+}
+
+.zone-resurrect.zone-active { border-color: var(--accent-green);  box-shadow: 0 0 20px rgba(128, 220, 72, 0.25); }
+.zone-repurpose.zone-active  { border-color: var(--accent-purple); box-shadow: 0 0 20px rgba(168, 85, 247, 0.25); }
+.zone-archive.zone-active    { border-color: var(--accent-blue);   box-shadow: 0 0 20px rgba(56, 189, 248, 0.25); }
+.zone-burn.zone-active       { border-color: var(--accent-red);    box-shadow: 0 0 20px rgba(239, 68, 68, 0.25); }
+.zone-bury.zone-active       { border-color: var(--accent-amber);  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25); }
+.zone-save.zone-active       { border-color: var(--accent-blue);   box-shadow: 0 0 20px rgba(56, 189, 248, 0.25); }
+
+.canvas-drop-zone.zone-active .zone-icon {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Invalid drop */
+.canvas-drop-zone.zone-invalid {
+  border-style: solid;
+  border-color: var(--accent-red) !important;
+  background: rgba(239, 68, 68, 0.07) !important;
+  animation: zone-shake 0.28s ease;
+}
+
+@keyframes zone-shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-5px); }
+  75%       { transform: translateX(5px); }
+}
+
+/* Success flash */
+.canvas-drop-zone.zone-success {
+  border-style: solid;
+  border-color: var(--accent-green) !important;
+  background: rgba(128, 220, 72, 0.08) !important;
+}
+
+/* Status pills inside zones */
+.zone-drop-hint,
+.zone-invalid-hint,
+.zone-success-msg {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 2px;
+  animation: zone-pill-pop 0.2s ease;
+}
+
+@keyframes zone-pill-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.zone-drop-hint    { background: rgba(128, 220, 72, 0.18); color: var(--accent-green); }
+.zone-invalid-hint { background: rgba(239, 68, 68, 0.18);  color: var(--accent-red); }
+.zone-success-msg  { background: rgba(128, 220, 72, 0.22); color: var(--accent-green); }
+
+/* ── Delete Confirmation Overlay ─────────────────────────────────────────── */
+.canvas-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: overlay-fade 0.2s ease;
+}
+
+@keyframes overlay-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.canvas-confirm-box {
+  max-width: 440px;
+  width: 92%;
+  padding: 34px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  animation: confirm-slide-up 0.22s ease;
+}
+
+@keyframes confirm-slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.confirm-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.canvas-confirm-box h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.canvas-confirm-box p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Draggable tombstone card inside confirm overlay */
+.confirm-tombstone-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1.5px dashed rgba(239, 68, 68, 0.45);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  cursor: grab;
+  user-select: none;
+  color: #f87171;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.confirm-tombstone-card:hover { transform: translateY(-2px); }
+.confirm-tombstone-card.confirm-card-dragging { opacity: 0.35; cursor: grabbing; }
+
+.confirm-drag-hint {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+/* Confirm burn drop zone */
+.confirm-burn-zone {
+  width: 100%;
+  min-height: 64px;
+  border: 2px dashed rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(239, 68, 68, 0.5);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  background: rgba(239, 68, 68, 0.03);
+}
+
+.confirm-burn-zone.confirm-zone-primed {
+  border-color: rgba(239, 68, 68, 0.55);
+  color: rgba(239, 68, 68, 0.75);
+}
+
+.confirm-burn-zone.confirm-zone-over {
+  border-style: solid;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  transform: scale(1.02);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.3);
+  animation: zone-pill-pop 0.15s ease;
+}

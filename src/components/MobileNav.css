@@ -1,0 +1,73 @@
+/* Mobile Bottom Navigation Bar */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 990;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: 8px 12px 14px 12px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.mobile-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.mobile-nav-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 12px;
+  transition: all 0.2s ease;
+}
+
+.mobile-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+.mobile-nav-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.mobile-nav-btn.active {
+  color: var(--accent-green);
+}
+
+.mobile-nav-btn.active .mobile-icon-wrap {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .mobile-bottom-nav {
+    display: block;
+  }
+}
