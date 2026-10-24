@@ -30,9 +30,9 @@ This app has no URL-based router. All navigation is state-driven. "Routes" are v
 
 | View | When shown |
 |---|---|
-| **Main app** (`'app'`) | Default on first load; any time the main graveyard is active |
-| **Login page** (`'login'`) | After clicking **Admin** in the navbar (unauthenticated), or visiting while a previous session was stored |
+| **Login page** (`'login'`) | Default on first load (no stored session); after logout |
 | **Admin dashboard** (`'admin'`) | After a successful login; or automatically if a stored session is found on load |
+| **Main app** (`'app'`) | After navigating from the admin dashboard via **Main Website** |
 
 ---
 
@@ -55,13 +55,11 @@ The login page shows a clickable demo credentials box — clicking either value 
 ### 1. Successful login
 
 1. Open `http://localhost:5173/` (or whatever port Vite assigned).
-2. The main Project Graveyard app loads directly — **no login required** for the public app.
-3. Click the **Admin** button in the top-right navigation bar.
-4. The login page appears.
-5. Enter `admin@graveyard.dev` and `ghost1234` (or click the green credential values to auto-fill).
-6. Click **Sign In to the Crypt**.
-7. A spinner appears for ~800ms simulating network delay.
-8. **Expected result:** Admin dashboard loads showing project statistics, projects table, and recent activity.
+2. **Expected result:** The Admin Portal login page loads immediately — green-themed, with tombstone decorations and a demo credentials box.
+3. Enter `admin@graveyard.dev` and `ghost1234` (or click the green credential values to auto-fill).
+4. Click **Sign In to the Crypt**.
+5. A spinner appears for ~800ms simulating network delay.
+6. **Expected result:** Admin dashboard loads showing project statistics, projects table, and recent activity.
 
 **Result: PASS** ✓ (verified with Playwright automation)
 
@@ -79,11 +77,11 @@ The login page shows a clickable demo credentials box — clicking either value 
 
 ---
 
-### 3. Unauthenticated admin access
+### 3. Unauthenticated access
 
 1. Open `http://localhost:5173/` with no stored session (fresh browser / private window).
-2. **Expected result:** The main graveyard app loads directly — NOT the admin dashboard. The Admin dashboard is not reachable without authenticating.
-3. Clicking **Admin** shows the login page — it does not skip to the dashboard.
+2. **Expected result:** The login page loads — NOT the admin dashboard and NOT the main app.
+3. Attempting to access the admin dashboard without credentials is impossible — there is no URL or button to bypass the login gate.
 
 **Result: PASS** ✓
 
@@ -111,8 +109,8 @@ The login page shows a clickable demo credentials box — clicking either value 
 #### Logout button
 
 1. While logged in, click **Logout** (in admin topbar or in the main app navbar).
-2. **Expected result:** Session is cleared from both `sessionStorage` and `localStorage`. Returns to the main public app.
-3. Clicking **Admin** again shows the login form (not the dashboard).
+2. **Expected result:** Session is cleared from both `sessionStorage` and `localStorage`. Returns to the **login page**.
+3. The admin dashboard is no longer accessible without re-authenticating.
 
 **Result: PASS** ✓ (verified with Playwright automation)
 

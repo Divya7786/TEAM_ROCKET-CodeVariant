@@ -118,7 +118,7 @@ Vite starts on the first available port starting from **5173**. The URL is print
 http://localhost:5173/
 ```
 
-The app loads directly into the main graveyard — no login required for the public interface.
+The app opens on the **Admin Portal login page**. Log in to reach the admin dashboard, or navigate to the main graveyard from there.
 
 ---
 
@@ -164,12 +164,11 @@ These are set in `src/auth/authContext.tsx` in the `DEMO_CREDENTIALS` constant.
 
 ### How authentication works
 
-1. The main graveyard app is **publicly accessible** — no login required.
-2. An **Admin** button is visible in the top navigation bar.
-3. Clicking **Admin** opens the login page.
-4. On successful login, the admin dashboard is shown.
-5. From the admin dashboard, **Main Website** returns to the public app.
-6. **Logout** ends the session and returns to the public app.
+1. Opening the app shows the **Admin Portal login page** first.
+2. Enter the demo credentials to log in.
+3. On successful login, the admin dashboard is shown.
+4. From the admin dashboard, **Main Website** navigates to the public graveyard app.
+5. **Logout** ends the session and returns to the login page.
 
 ### Session persistence
 

@@ -36,7 +36,7 @@ export const AdminDashboard: React.FC = () => {
       <header className="admin-topbar">
         <div className="admin-topbar-brand">
           <div className="admin-topbar-icon">
-            <Ghost size={18} color="#c084fc" strokeWidth={1.8} />
+            <Ghost size={18} color="#80DC48" strokeWidth={1.8} />
           </div>
           <div>
             <div className="admin-topbar-name">The Project Graveyard</div>
@@ -110,8 +110,8 @@ export const AdminDashboard: React.FC = () => {
 
           <div className="admin-stats-grid">
             <div className="admin-stat-card">
-              <div className="admin-stat-icon stat-icon-purple">
-                <Ghost size={20} color="#c084fc" />
+              <div className="admin-stat-icon stat-icon-green">
+                <Ghost size={20} color="#80DC48" />
               </div>
               <div>
                 <div className="admin-stat-num">{projects.length}</div>
@@ -150,8 +150,8 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             <div className="admin-stat-card">
-              <div className="admin-stat-icon stat-icon-purple">
-                <Boxes size={20} color="#c084fc" />
+              <div className="admin-stat-icon stat-icon-green">
+                <Boxes size={20} color="#80DC48" />
               </div>
               <div>
                 <div className="admin-stat-num">{snippets.length}</div>
@@ -224,7 +224,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="admin-actions-grid">
             <button className="admin-action-card" onClick={navigateToApp}>
               <div className="action-card-icon">
-                <LayoutDashboard size={18} color="#c084fc" />
+                <LayoutDashboard size={18} color="#80DC48" />
               </div>
               <div>
                 <p className="action-card-title">Dashboard</p>

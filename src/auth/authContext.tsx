@@ -85,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<AdminSession | null>(initialSession);
   // Default: main app is public. Only show admin/login when explicitly navigated.
   const [currentView, setCurrentView] = useState<AppView>(
-    initialSession ? 'admin' : 'app',
+    initialSession ? 'admin' : 'login',
   );
 
   const isAuthenticated = session !== null;
@@ -123,7 +123,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = useCallback(() => {
     clearSession();
     setSession(null);
-    setCurrentView('app'); // Return to main public app, not forced login
+    setCurrentView('login');
   }, []);
 
   const navigateToLogin = useCallback(() => {

@@ -76,7 +76,7 @@ export const LoginPage: React.FC = () => {
         {/* Header */}
         <div className="login-card-header">
           <div className="login-ghost-icon" aria-hidden>
-            <Ghost size={30} color="#c084fc" strokeWidth={1.8} />
+            <Ghost size={30} color="#80DC48" strokeWidth={1.8} />
           </div>
 
           <span className="login-brand-pill">
